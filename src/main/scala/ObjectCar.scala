@@ -5,7 +5,9 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 abstract class Car {
   def bookingPrice:Double
-  var stock=0
+  //var stock=0
+  // check this to understand field override of abstract class https://www.javatpoint.com/scala-field-overriding
+  var stock:Int
   def brands:List[String]
   def book(noOfCars:Int)
 }

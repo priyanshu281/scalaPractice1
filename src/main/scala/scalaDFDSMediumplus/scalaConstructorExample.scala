@@ -28,7 +28,7 @@ class myMultiplication(var a: Int, val b: Int) {
   }
 
   def this() {
-    this(a, b, teacherName)
+    this(2, 12)
   }
 }
 
