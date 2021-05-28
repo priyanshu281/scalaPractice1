@@ -1,0 +1,5 @@
+package sparkStreaming
+
+object streamingPractice {
+
+}
