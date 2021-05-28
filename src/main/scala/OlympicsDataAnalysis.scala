@@ -10,24 +10,24 @@ import org.apache.spark.sql.SparkSession
 import org.apache.log4j.{Level,Logger}
 
 
-object OlympicsDataAnalysis extends App{
-@transient lazy val LOG=Logger.getLogger(this.getClass) //For LOG4J
+object OlympicsDataAnalysis extends App with Serializable {
+ @transient lazy val LOG=Logger.getLogger(this.getClass) //For LOG4J
  //use @transient to not serialize LOG object
 
  /*val LOG=LoggerFactory.getLogger(this.getClass)
 val root=LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf[Logger].setLevel(Level.INFO)*/
-//difficult to set logLevel in sl4j
+ //difficult to set logLevel in sl4j
 
  Logger.getLogger("org").setLevel(Level.ERROR)
 
  var conf=new SparkConf()
  conf=conf.set("spark.rdd.compress","true").set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
  implicit  val spark:SparkSession=SparkSession.builder()
-                                              .appName("OlympicsAnalysis")
-                                              .enableHiveSupport()
-                                              .config(conf)
-                                              .master("local")
-                                              .getOrCreate()
+   .appName("OlympicsAnalysis")
+   .enableHiveSupport()
+   .config(conf)
+   .master("local")
+   .getOrCreate()
  spark.sparkContext.setLogLevel("ERROR")
  //This wont solve the purpose as this activates after half of the logs been published
  //Need to get log4j.properties from folder where spark is installed
@@ -53,4 +53,5 @@ val root=LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf
 
  val totMedalsDF=spark.sql("""Select Country,SUM(TotalMedals) as MedalsWonTillDate from olympicsData group by Country order by MedalsWonTillDate desc""")
  totMedalsDF.show(true)
+ spark.close()
 }
