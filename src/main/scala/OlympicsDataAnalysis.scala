@@ -6,6 +6,7 @@ Problem Statement 3: Find the total number of medals won by each country.*/
 
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
+
 //import org.slf4j.{Logger, LoggerFactory}
 import org.apache.log4j.{Level,Logger}
 
@@ -41,12 +42,14 @@ val root=LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME).asInstanceOf
 
  //olyDF.show(3)
  //LOG.error("printThis:"+olyDF.count())
-
+import spark.implicits._
  olyDF.createOrReplaceTempView("olympicsData")
  val countryMedalsDF=spark.sql("""Select Country,SUM(TotalMedals) as MedalsWonTillDate from olympicsData where sport='Swimming' group by Country order by MedalsWonTillDate desc""")
  //countryMedalsDF.show(9)
  //olyDF.filter(olyDF.col("Sport") === "Swimming")
- //DF syntax has been changed from Spark 3.0 , Need to see how to do it with DF apis
+ olyDF.filter($"Sport" === "Swimming" && $"country" === "India")
+ //to use dataframe apis you need to import implicits._
+
  val indiaTallyDF=spark.sql("select athleteName,TotalMedals from olympicsData where country='India' and Year='2012' ")
 
  //indiaTallyDF.show  //Total 6 Medals
