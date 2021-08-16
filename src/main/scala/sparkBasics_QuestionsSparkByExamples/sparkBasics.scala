@@ -71,12 +71,24 @@ import spark.implicits._
       .add("gender", StringType)
 
     val languageDf= spark.createDataFrame(spark.sparkContext.parallelize(arrayStructData),arrayStructureSchema)
-    languageDf.show()
+    //languageDf.show()
 
-    languageDf.filter($"name.lastname" === "Williams").show(false)
+    //languageDf.filter($"name.lastname" === "Williams").show(false)
 
     languageDf.filter(array_contains($"languages","Java")).show(false)
 
 
+    //  println("my sequence:"+k)
+
+    val r= scala.util.Random
+    val population:List[List[Int]] = for{
+      d <- (0 to 1000).toList
+      i <- 1 to 2
+
+    } yield List(d,i)
+
+    val dftest= population.map(x=> (x(0),x(1))).toDF(Seq("dummy_key","suffix"):_*)
+    dftest.show()
+    spark.close()
   }
 }
