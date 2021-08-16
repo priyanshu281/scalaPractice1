@@ -26,6 +26,6 @@ libraryDependencies ++= Seq(
 sbt 0.13 uses Scala 2.10
 sbt 1.x uses Scala 2.12
 Also check spark and scala compatibility
-check this for sbt compatibilty and crossScala version
+check this for sbt compatibility and crossScala version
 https://stackoverflow.com/questions/49000201/whats-the-relationship-of-the-versions-of-scala-when-i-use-sbt-to-build-a-scala
 */
