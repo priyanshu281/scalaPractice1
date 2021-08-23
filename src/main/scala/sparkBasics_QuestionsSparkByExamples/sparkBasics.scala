@@ -90,5 +90,11 @@ import spark.implicits._
     val dftest= population.map(x=> (x(0),x(1))).toDF(Seq("dummy_key","suffix"):_*)
     dftest.show()
     spark.close()
+
+    //to remove header from rdd
+    val rdd=spark.sparkContext.textFile("c://")
+   /* val newrdd=rdd.mapPartitionWithIndex{
+      (idx,iter) => if (idx == 0) iter.drop(1) else iter
+    }*/
   }
 }
